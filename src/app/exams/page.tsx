@@ -1,4 +1,6 @@
 export const runtime = 'edge';
+// 👇 添加这一行！这将禁用静态预渲染
+export const dynamic = 'force-dynamic';
 import { db } from '@/db';
 import { exams, questions } from '@/db/schema';
 import { eq, desc } from 'drizzle-orm';
