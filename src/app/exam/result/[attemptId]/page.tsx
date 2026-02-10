@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { notFound } from 'next/navigation';
 import { db } from '@/db';
 import { questions, exams, userAttempts } from '@/db/schema';
