@@ -1,0 +1,10 @@
+{
+  "name": "ielts-practice",
+  "compatibility_date": "2024-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": ".vercel/output/static/_worker.js", // 👈 指向 Next-on-pages 生成的入口
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".vercel/output/static"    // 👈 指向静态资源目录
+  }
+}
