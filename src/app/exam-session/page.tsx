@@ -318,13 +318,13 @@ function ExamSessionContent() {
                 {/* Audio: real file or TTS fallback */}
                 {module === 'listening' && (
                   <div className="mb-6">
-                    {currentQuestion?.content?.audioUrl ? (
-                      <AudioPlayer src={currentQuestion.content.audioUrl} />
-                    ) : currentQuestion?.content?.transcript ? (
+                    {currentQuestion?.content?.transcript ? (
                       <TTSPlayer
                         text={currentQuestion.content.transcript}
                         label={currentQuestion.content.title || 'Listening Audio'}
                       />
+                    ) : currentQuestion?.content?.audioUrl?.startsWith('http') ? (
+                      <AudioPlayer src={currentQuestion.content.audioUrl} />
                     ) : null}
                   </div>
                 )}
