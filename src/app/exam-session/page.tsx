@@ -11,6 +11,7 @@ import { submitExam } from '@/actions/submit-exam';
 import { ExamTimer } from '@/components/exam/ExamTimer';
 import { QuestionNavigation } from '@/components/exam/QuestionNavigation';
 import { AudioPlayer } from '@/components/exam/AudioPlayer';
+import { TTSPlayer } from '@/components/exam/TTSPlayer';
 import { GapFillQuestion } from '@/components/exam/GapFillQuestion';
 import { MatchingQuestion } from '@/components/exam/MatchingQuestion';
 import { WritingEditor } from '@/components/exam/WritingEditor';
@@ -35,6 +36,7 @@ interface Question {
     passage?: string;
     title?: string;
     audioUrl?: string;
+    transcript?: string;
     prompt?: string;
     [key: string]: unknown;
   };
@@ -313,9 +315,17 @@ function ExamSessionContent() {
             <div className="flex-1 flex">
               {/* Left: Passage / Audio */}
               <div className="w-1/2 border-r bg-background p-6 overflow-auto">
-                {module === 'listening' && currentQuestion?.content?.audioUrl && (
+                {/* Audio: real file or TTS fallback */}
+                {module === 'listening' && (
                   <div className="mb-6">
-                    <AudioPlayer src={currentQuestion.content.audioUrl} />
+                    {currentQuestion?.content?.audioUrl ? (
+                      <AudioPlayer src={currentQuestion.content.audioUrl} />
+                    ) : currentQuestion?.content?.transcript ? (
+                      <TTSPlayer
+                        text={currentQuestion.content.transcript}
+                        label={currentQuestion.content.title || 'Listening Audio'}
+                      />
+                    ) : null}
                   </div>
                 )}
 

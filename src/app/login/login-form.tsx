@@ -1,7 +1,8 @@
 'use client';
 
-import { useActionState } from 'react';
-import { authenticate, type AuthState } from '@/actions/auth';
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -11,10 +12,40 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import Link from 'next/link';
 
 export function LoginForm() {
-  const [state, formAction, isPending] = useActionState<AuthState, FormData>(
-    authenticate,
-    {},
-  );
+  const router = useRouter();
+  const [error, setError] = useState('');
+  const [isPending, setIsPending] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError('');
+    setIsPending(true);
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false, // 不自动跳转，手动控制
+      });
+
+      if (result?.error) {
+        setError('邮箱或密码错误');
+        setIsPending(false);
+        return;
+      }
+
+      // 登录成功 → 强制刷新后跳转
+      router.push('/exams');
+      router.refresh();
+    } catch {
+      setError('登录失败，请重试');
+      setIsPending(false);
+    }
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted/50 px-4 relative">
@@ -42,12 +73,12 @@ export function LoginForm() {
           </CardHeader>
 
           <CardContent>
-            <form action={formAction} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Error message */}
-              {state.error && (
+              {error && (
                 <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
                   <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                  <span>{state.error}</span>
+                  <span>{error}</span>
                 </div>
               )}
 
