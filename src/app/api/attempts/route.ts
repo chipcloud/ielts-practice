@@ -44,11 +44,10 @@ export async function POST(req: NextRequest) {
     }
 
     // 未登录：仍然生成临时 ID（向下兼容）
-    const { randomUUID } = await import('crypto');
     return NextResponse.json({
       success: true,
       data: {
-        id: randomUUID(),
+        id: crypto.randomUUID(),
         examId,
         module,
         status: 'in_progress',
