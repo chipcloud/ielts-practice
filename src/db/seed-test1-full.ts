@@ -92,7 +92,7 @@ async function seedFull() {
     questionStructure: {
       type: 'gap_fill', instruction: 'Complete the notes. Write NO MORE THAN THREE WORDS.',
       questionText: x.q,
-      gapText: x.q, gaps: [{ id: 1, answer: x.a }], correctAnswer: [x.a], points: 1,
+      gapText: x.q.replace('______', '{{gap}}'), gaps: [{ id: 1, answer: x.a }], correctAnswer: [x.a], points: 1,
     },
   }));
 

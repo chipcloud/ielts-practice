@@ -360,9 +360,12 @@ function ExamSessionContent() {
                         <p className="text-sm text-muted-foreground mb-4">
                           {currentQuestion.questionStructure.instruction}
                         </p>
-                        <h3 className="font-medium text-lg">
-                          {currentQuestion.questionStructure.questionText}
-                        </h3>
+                        {/* 填空题不重复显示 questionText，因为 gapText 已经包含了完整句子 */}
+                        {!currentQuestion.questionStructure.gapText && (
+                          <h3 className="font-medium text-lg">
+                            {currentQuestion.questionStructure.questionText}
+                          </h3>
+                        )}
                       </div>
 
                       {/* Answer area — branch by question type */}
