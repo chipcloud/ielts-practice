@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
 
-export default NextAuth(authConfig).auth;
+export default NextAuth({ ...authConfig, providers: [] }).auth;
 
 export const config = {
   // Protect /exam/* routes, skip API routes / static files / images

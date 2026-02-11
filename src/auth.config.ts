@@ -48,5 +48,4 @@ export const authConfig = {
       return true;
     },
   },
-  providers: [], // actual providers are in auth.ts
-} satisfies NextAuthConfig;
+} satisfies Omit<NextAuthConfig, 'providers'>;
