@@ -1,8 +1,14 @@
+export const dynamic = 'force-dynamic';
 export const runtime = 'edge';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { db } from '@/db';
 import { userAttempts } from '@/db/schema';
+
+// GET /api/attempts - Dummy handler to prevent 405 on redirected POSTs
+export async function GET() {
+  return NextResponse.json({ message: 'API is alive. Use POST to create attempts.' });
+}
 
 // POST /api/attempts — 创建考试 attempt 并持久化到 DB
 export async function POST(req: NextRequest) {

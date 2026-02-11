@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 export const runtime = 'edge';
 import { notFound } from 'next/navigation';
 import { db } from '@/db';
