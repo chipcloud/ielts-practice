@@ -2,3 +2,7 @@ name = "ielts-practice"
 pages_build_output_dir = ".vercel/output/static"
 compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
+
+[vars]
+AUTH_TRUST_HOST = "true"
+NEXT_PUBLIC_APP_URL = "https://ielts-practice-64v.pages.dev"
