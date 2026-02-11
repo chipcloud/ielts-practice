@@ -1,10 +1,14 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
-import { exams, questions, users } from './schema'; // 假设 schema 路径正确
+import { exams, questions, users } from './schema';
 import { hash } from 'bcryptjs';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres123@localhost:5432/ielts_practice',
+  ssl: process.env.DATABASE_URL?.includes('neon') ? { rejectUnauthorized: false } : undefined,
 });
 
 const db = drizzle(pool);
